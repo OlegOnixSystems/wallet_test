@@ -1,0 +1,56 @@
+<h1>Wallet: <%= @wallet.name %></h1>
+
+<%= link_to '<- Back', wallets_path %>
+<br><br>
+<table>
+  <tr>
+    <td colspan="2">Balance:</td>
+    <td><%= number_to_currency(@wallet.balance) %></td>
+  </tr>
+  <tr>
+    <td colspan="3"><hr></td>
+  </tr>
+  <tr>
+    <th>Description</th>
+    <th>Time</th>
+    <th>Amount</th>
+  </tr>
+  <% @wallet.transactions.order(id: :desc).each do |transaction| %>
+    <tr>
+      <td>
+        <%= transaction.incoming? ? 'Revenue from' : 'Expense for' %>
+        <%= transaction.interact_wallet.name %>
+      </td>
+      <td>
+        <%= time_tag(transaction.created_at) %>
+      </td>
+      <td style="text-align: right; color: <%= transaction.incoming? ? 'green' : 'red' %>;">
+        <%= number_to_currency(transaction.amount) %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<h3>Make transaction</h3>
+<form method="post" action="<%= new_wallet_transaction_path(@wallet) %>">
+  <select name="interact_wallet_id">
+    <option>Recipient</option>
+    <optgroup label="Users">
+      <% UserWallet.all.each do |wallet| %>
+        <option value="<%= wallet.id %>"><%= wallet.name %></option>
+      <% end %>
+    </optgroup>
+    <optgroup label="Teams">
+      <% TeamWallet.all.each do |wallet| %>
+        <option value="<%= wallet.id %>"><%= wallet.name %></option>
+      <% end %>
+    </optgroup>
+    <optgroup label="Stocks">
+      <% StockWallet.all.each do |wallet| %>
+        <option value="<%= wallet.id %>"><%= wallet.name %></option>
+      <% end %>
+    </optgroup>
+  </select>
+  <input type="text" name="amount" placeholder="Amount">
+  <input type="submit" value="Submit">
+</form>

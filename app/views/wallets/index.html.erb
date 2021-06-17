@@ -1,0 +1,40 @@
+<h1>Wallets</h1>
+
+<h3>Users</h3>
+<ul>
+  <% UserWallet.all.each do |wallet| %>
+    <li>
+      <%= link_to(wallet.name, wallet_path(wallet)) %>
+    </li>
+  <% end %>
+</ul>
+
+<h3>Teams</h3>
+<ul>
+  <% TeamWallet.all.each do |wallet| %>
+    <li>
+      <%= link_to wallet.name, wallet_path(wallet) %>
+    </li>
+  <% end %>
+</ul>
+
+<h3>Stocks</h3>
+<ul>
+  <% StockWallet.all.each do |wallet| %>
+    <li>
+      <%= link_to wallet.name, wallet_path(wallet) %>
+    </li>
+  <% end %>
+</ul>
+
+<h3>Add a wallet</h3>
+<form method="post" action="<%= wallets_path %>">
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <select name="type">
+    <option value="UserWallet">User</option>
+    <option value="TeamWallet">Team</option>
+    <option value="StockWallet">Stock</option>
+  </select>
+  <input type="text" name="name" placeholder="Wallet name">
+  <input type="submit" value="Submit">
+</form>
