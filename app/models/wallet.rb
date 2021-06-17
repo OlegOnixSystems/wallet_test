@@ -1,3 +1,5 @@
 class Wallet < ApplicationRecord
-  belongs_to :owner, polymorphic: true
+  has_many :transactions
+
+  validates :name, presence: true, uniqueness: { scope: :type }, length: { maximum: 255 }
 end
