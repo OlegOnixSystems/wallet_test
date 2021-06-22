@@ -30,6 +30,9 @@
 <h3>Add a wallet</h3>
 <form method="post" action="<%= wallets_path %>">
   <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <% flash.each do |name, msg| %>
+    <%= content_tag :div, msg, class: name %>
+  <% end %>
   <select name="type">
     <option value="UserWallet">User</option>
     <option value="TeamWallet">Team</option>

@@ -3,12 +3,9 @@
 <%= link_to '<- Back', wallets_path %>
 <br><br>
 <table>
-  <tr>
+  <tr class="balance">
     <td colspan="2">Balance:</td>
     <td><%= number_to_currency(@wallet.balance) %></td>
-  </tr>
-  <tr>
-    <td colspan="3"><hr></td>
   </tr>
   <tr>
     <th>Description</th>
@@ -24,7 +21,7 @@
       <td>
         <%= time_tag(transaction.created_at) %>
       </td>
-      <td style="text-align: right; color: <%= transaction.incoming? ? 'green' : 'red' %>;">
+      <td class="amount <%= transaction.incoming? ? 'positive' : 'negative' %>">
         <%= number_to_currency(transaction.amount) %>
       </td>
     </tr>
@@ -32,7 +29,11 @@
 </table>
 
 <h3>Make transaction</h3>
-<form method="post" action="<%= new_wallet_transaction_path(@wallet) %>">
+<form method="post" action="<%= wallet_transactions_path(@wallet) %>">
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <% flash.each do |name, msg| %>
+    <%= content_tag :div, msg, class: name %>
+  <% end %>
   <select name="interact_wallet_id">
     <option>Recipient</option>
     <optgroup label="Users">

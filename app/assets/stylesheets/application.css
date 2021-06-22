@@ -13,3 +13,36 @@
  *= require_tree .
  *= require_self
  */
+
+tr.balance {
+    font-weight: bold;
+}
+
+tr.balance td {
+    border-bottom: 1px solid #888888;
+}
+
+th {
+    padding-top: 12px;
+}
+
+td {
+    padding: 2px 12px;
+}
+
+.amount {
+    text-align: right;
+}
+
+.positive {
+    color: green;
+}
+
+.negative {
+    color: red;
+}
+
+.errors {
+    color: red;
+    margin-bottom: 12px;
+}

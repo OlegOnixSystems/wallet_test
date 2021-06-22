@@ -5,6 +5,9 @@ class WalletsController < ApplicationController
 
   def create
     Wallet.create!(params.permit(:type, :name))
+  rescue ActiveRecord::RecordInvalid => e
+    flash[:errors] = e.to_s
+  ensure
     redirect_to wallets_path
   end
 end
