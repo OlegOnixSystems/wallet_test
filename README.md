@@ -30,6 +30,11 @@ development:
   <<: *default
   database: wallet_test
   pool: 5
+
+test:
+  <<: *default
+  database: wallet_test_test
+  pool: 5
 ```
 3. Run rake tasks in the root directory to setup the DB with testing data:
 ```bash
